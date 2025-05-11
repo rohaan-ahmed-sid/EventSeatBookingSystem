@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="424663c668074404bc80d216340917dd" Name="Diagram1">
+        <EntityTypeShape EntityType="EventSeatBookingSystemModel.AIRecommendation" Width="1.5" PointX="3" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventSeatBookingSystemModel.Analytic" Width="1.5" PointX="3" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventSeatBookingSystemModel.Booking" Width="1.5" PointX="5.25" PointY="12.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventSeatBookingSystemModel.Event" Width="1.5" PointX="0.75" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventSeatBookingSystemModel.Notification" Width="1.5" PointX="3" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventSeatBookingSystemModel.Payment" Width="1.5" PointX="7.5" PointY="12.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventSeatBookingSystemModel.Seat" Width="1.5" PointX="3" PointY="17.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventSeatBookingSystemModel.User" Width="1.5" PointX="0.75" PointY="11.75" IsExpanded="true" />
+        <AssociationConnector Association="EventSeatBookingSystemModel.FK__AIRecomme__Event__4D94879B" ManuallyRouted="false" />
+        <AssociationConnector Association="EventSeatBookingSystemModel.FK__Analytics__Event__5535A963" ManuallyRouted="false" />
+        <AssociationConnector Association="EventSeatBookingSystemModel.FK__Bookings__EventI__45F365D3" ManuallyRouted="false" />
+        <AssociationConnector Association="EventSeatBookingSystemModel.FK__Bookings__SeatId__46E78A0C" ManuallyRouted="false" />
+        <AssociationConnector Association="EventSeatBookingSystemModel.FK__Bookings__UserId__44FF419A" ManuallyRouted="false" />
+        <AssociationConnector Association="EventSeatBookingSystemModel.FK__Payments__Bookin__4AB81AF0" ManuallyRouted="false" />
+        <AssociationConnector Association="EventSeatBookingSystemModel.FK__Notificat__Event__52593CB8" ManuallyRouted="false" />
+        <AssociationConnector Association="EventSeatBookingSystemModel.FK__Seats__EventId__403A8C7D" ManuallyRouted="false" />
+        <AssociationConnector Association="EventSeatBookingSystemModel.FK__Notificat__UserI__5165187F" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

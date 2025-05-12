@@ -8,26 +8,24 @@ namespace EventSeatBookingSystem.Controllers
 {
     public class UserController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private EventSeatBookingSystemEntities db = new EventSeatBookingSystemEntities();
 
-        // GET: User/Register
         public ActionResult Register()
         {
             return View();
         }
 
-        // POST: User/Register
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(UserModel model)
+        public ActionResult Register(User model)
         {
             if (ModelState.IsValid)
             {
-                var user = new UserModel
+                var user = new User
                 {
                     Name = model.Name,
                     Email = model.Email,
-                    PasswordHash = BCrypt.Net.BCrypt.HashPassword(model.PasswordHash), // Hash password
+                    PasswordHash =model.PasswordHash, 
                     Role = "User",
                     CreatedAt = System.DateTime.Now
                 };
@@ -39,21 +37,18 @@ namespace EventSeatBookingSystem.Controllers
             return View(model);
         }
 
-        // GET: User/Login
         public ActionResult Login()
         {
             return View();
         }
 
-        // POST: User/Login
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Login(string email, string password)
         {
             var user = db.Users.FirstOrDefault(u => u.Email == email);
-            if (user != null && BCrypt.Net.BCrypt.Verify(password, user.PasswordHash))
+            if (user != null && user.PasswordHash != null)
             {
-                // Handle user session or JWT
                 return RedirectToAction("Index", "Home");
             }
             ModelState.AddModelError("", "Invalid login attempt.");

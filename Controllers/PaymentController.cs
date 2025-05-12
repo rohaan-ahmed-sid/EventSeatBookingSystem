@@ -8,9 +8,8 @@ namespace EventSeatBookingSystem.Controllers
 {
     public class PaymentController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private EventSeatBookingSystemEntities db = new EventSeatBookingSystemEntities();
 
-        // GET: Payment/ProcessPayment/5
         public ActionResult ProcessPayment(int bookingId)
         {
             var booking = db.Bookings.FirstOrDefault(b => b.BookingId == bookingId);
@@ -18,10 +17,9 @@ namespace EventSeatBookingSystem.Controllers
             {
                 return HttpNotFound();
             }
-            return View(booking); // Display payment form
+            return View(booking);
         }
 
-        // POST: Payment/ConfirmPayment
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult ConfirmPayment(int bookingId, decimal amount, string paymentStatus, string paymentGateway)
@@ -32,7 +30,7 @@ namespace EventSeatBookingSystem.Controllers
                 return HttpNotFound();
             }
 
-            var payment = new PaymentModel
+            var payment = new Payment
             {
                 BookingId = bookingId,
                 Amount = amount,
@@ -46,7 +44,6 @@ namespace EventSeatBookingSystem.Controllers
             return RedirectToAction("PaymentSuccess", new { paymentId = payment.PaymentId });
         }
 
-        // GET: Payment/PaymentSuccess
         public ActionResult PaymentSuccess(int paymentId)
         {
             var payment = db.Payments.FirstOrDefault(p => p.PaymentId == paymentId);
@@ -54,7 +51,7 @@ namespace EventSeatBookingSystem.Controllers
             {
                 return HttpNotFound();
             }
-            return View(payment); // Display payment success page
+            return View(payment); 
         }
     }
 }

@@ -8,9 +8,8 @@ namespace EventSeatBookingSystem.Controllers
 {
     public class AnalyticsController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private EventSeatBookingSystemEntities db = new EventSeatBookingSystemEntities();
 
-        // GET: Analytics/EventStats
         public ActionResult EventStats(int eventId)
         {
             var eventStats = db.Analytics.FirstOrDefault(a => a.EventId == eventId);
@@ -18,7 +17,7 @@ namespace EventSeatBookingSystem.Controllers
             {
                 return HttpNotFound();
             }
-            return View(eventStats); // Show analytics data for the event
+            return View(eventStats);
         }
     }
 }

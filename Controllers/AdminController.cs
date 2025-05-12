@@ -8,16 +8,15 @@ namespace EventSeatBookingSystem.Controllers
 {
     public class AdminController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private EventSeatBookingSystemEntities db = new EventSeatBookingSystemEntities();
 
-        // GET: Admin/Dashboard - Displays admin dashboard with system statistics
         public ActionResult Dashboard()
         {
             var totalUsers = db.Users.Count();
             var totalEvents = db.Events.Count();
             var totalBookings = db.Bookings.Count();
             var totalRevenue = db.Payments.Sum(p => p.Amount);
-            var totalSeatsAvailable = db.Seats.Where(s => s.IsAvailable == 1).Count();
+            var totalSeatsAvailable = db.Seats.Where(s => (bool)s.IsAvailable).Count();
             var totalTicketsSold = db.Seats.Count() - totalSeatsAvailable;
 
             var stats = new
@@ -30,35 +29,31 @@ namespace EventSeatBookingSystem.Controllers
                 TotalTicketsSold = totalTicketsSold
             };
 
-            return View(stats); // Return statistics to the dashboard view
+            return View(stats); 
         }
 
-        // GET: Admin/ManageUsers - Displays a list of all users
         public ActionResult ManageUsers()
         {
             var users = db.Users.ToList();
-            return View(users); // Display a list of all users
+            return View(users); 
         }
 
-        // GET: Admin/ManageEvents - Displays a list of all events
         public ActionResult ManageEvents()
         {
             var events = db.Events.ToList();
-            return View(events); // Display a list of all events
+            return View(events); 
         }
 
-        // GET: Admin/ManageBookings - Displays all bookings
         public ActionResult ManageBookings()
         {
             var bookings = db.Bookings.Include("User").Include("Event").Include("Seat").ToList();
-            return View(bookings); // Display all bookings with associated data
+            return View(bookings);
         }
 
-        // GET: Admin/ManagePayments - Displays all payments
         public ActionResult ManagePayments()
         {
             var payments = db.Payments.Include("Booking").ToList();
-            return View(payments); // Display a list of all payments
+            return View(payments); 
         }
     }
 }

@@ -8,25 +8,22 @@ namespace EventSeatBookingSystem.Controllers
 {
     public class EventController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private EventSeatBookingSystemEntities db = new EventSeatBookingSystemEntities();
 
-        // GET: Event/Index
         public ActionResult Index()
         {
             var events = db.Events.ToList();
             return View(events);
         }
 
-        // GET: Event/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Event/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(EventModel model)
+        public ActionResult Create(Event model)
         {
             if (ModelState.IsValid)
             {
@@ -37,7 +34,6 @@ namespace EventSeatBookingSystem.Controllers
             return View(model);
         }
 
-        // GET: Event/Details/5
         public ActionResult Details(int id)
         {
             var eventDetails = db.Events.FirstOrDefault(e => e.EventId == id);

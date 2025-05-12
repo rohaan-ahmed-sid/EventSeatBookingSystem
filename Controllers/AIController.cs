@@ -8,9 +8,8 @@ namespace EventSeatBookingSystem.Controllers
 {
     public class AIController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private EventSeatBookingSystemEntities db = new EventSeatBookingSystemEntities();
 
-        // GET: AI/Recommend/5
         public ActionResult Recommend(int eventId)
         {
             var eventDetails = db.Events.FirstOrDefault(e => e.EventId == eventId);
@@ -19,8 +18,7 @@ namespace EventSeatBookingSystem.Controllers
                 return HttpNotFound();
             }
 
-            // Placeholder AI logic for recommendations
-            var recommendation = new AIRecommendationModel
+            var recommendation = new AIRecommendation
             {
                 EventId = eventId,
                 RecommendedSeats = "Seats 1-10 are ideal for VIPs.",
@@ -29,7 +27,7 @@ namespace EventSeatBookingSystem.Controllers
 
             db.AIRecommendations.Add(recommendation);
             db.SaveChanges();
-            return View(recommendation); // Show AI recommendations
+            return View(recommendation); 
         }
     }
 }

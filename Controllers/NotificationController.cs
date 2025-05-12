@@ -8,12 +8,11 @@ namespace EventSeatBookingSystem.Controllers
 {
     public class NotificationController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private EventSeatBookingSystemEntities db = new EventSeatBookingSystemEntities();
 
-        // GET: Notification/SendNotification/5
         public ActionResult SendNotification(int userId, int eventId, string message, string type)
         {
-            var notification = new NotificationModel
+            var notification = new Notification
             {
                 UserId = userId,
                 EventId = eventId,
@@ -27,7 +26,6 @@ namespace EventSeatBookingSystem.Controllers
             return RedirectToAction("NotificationSent", new { notificationId = notification.NotificationId });
         }
 
-        // GET: Notification/NotificationSent
         public ActionResult NotificationSent(int notificationId)
         {
             var notification = db.Notifications.FirstOrDefault(n => n.NotificationId == notificationId);
@@ -35,7 +33,7 @@ namespace EventSeatBookingSystem.Controllers
             {
                 return HttpNotFound();
             }
-            return View(notification); // Show sent notification
+            return View(notification); 
         }
     }
 }

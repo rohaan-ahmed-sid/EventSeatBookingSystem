@@ -10,22 +10,21 @@
 namespace EventSeatBookingSystem.Models
 {
     using System;
-    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-
-    public partial class ApplicationDbContext : DbContext
+    
+    public partial class EventSeatBookingSystemEntities : DbContext
     {
-        public ApplicationDbContext()
-            : base("name=ApplicationDbContext") 
+        public EventSeatBookingSystemEntities()
+            : base("name=EventSeatBookingSystemEntities")
         {
         }
-
+    
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder); 
+            throw new UnintentionalCodeFirstException();
         }
-
+    
         public virtual DbSet<AIRecommendation> AIRecommendations { get; set; }
         public virtual DbSet<Analytic> Analytics { get; set; }
         public virtual DbSet<Booking> Bookings { get; set; }

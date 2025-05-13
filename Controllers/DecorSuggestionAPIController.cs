@@ -25,7 +25,7 @@ namespace EventSeatBookingSystem.Controllers
 
         private async Task<string> GenerateImageWithHuggingFace(string prompt)
         {
-            string apiToken = "YOUR_HUGGINGFACE_API_TOKEN";
+            string apiToken = "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";
             string endpoint = "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-2-1";
 
             using (var client = new HttpClient())

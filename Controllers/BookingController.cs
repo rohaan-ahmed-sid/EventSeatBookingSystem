@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 using EventSeatBookingSystem.Models;
 using Microsoft.AspNet.Identity;
+using System.Collections.Generic;
 
 namespace EventSeatBookingSystem.Controllers
 {

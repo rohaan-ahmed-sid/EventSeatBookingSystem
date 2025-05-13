@@ -1,50 +1,59 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using OpenAI_API;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace EventSeatBookingSystem.Controllers
 {
     [RoutePrefix("api/AI")]
-    public class AIDecorSuggestionsController : ApiController
+    public class DecorSuggestionAPIController : ApiController
     {
-        private readonly OpenAIAPI _openAi;
-
-        public AIDecorSuggestionsController()
-        {
-            _openAi = new OpenAIAPI("api key"); 
-        }
-
         [HttpPost]
-        [Route("DecorSuggestions")]
-        public IHttpActionResult GetDecorSuggestions([FromBody] DecorSuggestionsRequest request)
+        [Route("DecorSuggestionsImage")]
+        public async Task<IHttpActionResult> GetDecorSuggestionImage([FromBody] DecorSuggestionsRequest request)
         {
             if (request == null || string.IsNullOrWhiteSpace(request.EventName))
             {
                 return BadRequest("Invalid input.");
             }
 
-            var decorSuggestion = GetDecorSuggestionFromAI(request.EventName, request.Theme);
-            
-            return Ok(decorSuggestion); 
+            string prompt = $"Event: {request.EventName}, Theme: {request.Theme}. Generate a beautiful event decor idea.";
+            string imageUrl = await GenerateImageWithHuggingFace(prompt);
+            return Ok(new { imageUrl });
         }
 
-        private string GetDecorSuggestionFromAI(string eventName, string theme)
+        private async Task<string> GenerateImageWithHuggingFace(string prompt)
         {
-            var prompt = $"Suggest event decor ideas and layout for a {eventName} with the theme '{theme}'.";
+            string apiToken = "YOUR_HUGGINGFACE_API_TOKEN";
+            string endpoint = "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-2-1";
 
-            var completionRequest = _openAi.Completions.CreateCompletionAsync(prompt, model: "text-davinci-003", max_tokens: 150).Result;
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiToken);
+                var content = new StringContent("{\"inputs\": \"" + prompt + "\"}", System.Text.Encoding.UTF8, "application/json");
+                var response = await client.PostAsync(endpoint, content);
+                response.EnsureSuccessStatusCode();
 
-            return completionRequest.Choices[0].Text.Trim(); 
+                var bytes = await response.Content.ReadAsByteArrayAsync();
+
+                string folderPath = System.Web.Hosting.HostingEnvironment.MapPath("~/GeneratedImages/");
+                if (!System.IO.Directory.Exists(folderPath))
+                    System.IO.Directory.CreateDirectory(folderPath);
+
+                string fileName = Guid.NewGuid().ToString() + ".png";
+                string filePath = System.IO.Path.Combine(folderPath, fileName);
+                System.IO.File.WriteAllBytes(filePath, bytes);
+
+                string imageUrl = "/GeneratedImages/" + fileName;
+                return imageUrl;
+            }
         }
     }
 
     public class DecorSuggestionsRequest
     {
-        public string EventName { get; set; } 
-        public string Theme { get; set; }   
+        public string EventName { get; set; }
+        public string Theme { get; set; }
     }
 }

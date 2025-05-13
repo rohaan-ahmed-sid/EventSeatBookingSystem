@@ -8,13 +8,13 @@ using EventSeatBookingSystem.Models;
 
 namespace EventSeatBookingSystem.Controllers
 {
-    [RoutePrefix("api/SeatSelection")]
+    [System.Web.Http.RoutePrefix("api/SeatSelection")]
     public class SeatSelectionAPIController : ApiController
     {
         private EventSeatBookingSystemEntities db = new EventSeatBookingSystemEntities();
 
-        [HttpPost]
-        [Route("SelectSeats")]
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("SelectSeats")]
         public IHttpActionResult GetBestSeats([FromBody] SeatSelectionRequest request)
         {
             if (request == null || request.EventId <= 0)
@@ -32,9 +32,8 @@ namespace EventSeatBookingSystem.Controllers
 
             var rankedSeats = RankSeatsBasedOnPreferences(availableSeats, request);
 
-            return Ok(rankedSeats.Take(5));  
+            return Ok(rankedSeats.Take(5));
         }
-
 
         private List<Seat> RankSeatsBasedOnPreferences(List<Seat> availableSeats, SeatSelectionRequest request)
         {
@@ -46,19 +45,18 @@ namespace EventSeatBookingSystem.Controllers
 
                 if (!string.IsNullOrEmpty(request.SeatType) && seat.SeatType == request.SeatType)
                 {
-                    score += 10;  
+                    score += 10;
                 }
 
                 if (request.ProximityToStage > 0)
                 {
-                    int distanceToStage = CalculateProximity(seat.SeatNumber); 
+                    int distanceToStage = CalculateProximity(seat.SeatNumber);
                     if (distanceToStage <= request.ProximityToStage)
                     {
-                        score += 5; 
+                        score += 5;
                     }
                 }
 
-            
                 rankedSeats.Add(new RankedSeat { Seat = seat, Score = score });
             }
 
@@ -68,7 +66,7 @@ namespace EventSeatBookingSystem.Controllers
 
         private int CalculateProximity(string seatNumber)
         {
-            return seatNumber.Length; 
+            return seatNumber.Length;
         }
 
         private int CalculateSeatScore(Seat seat, SeatSelectionRequest request)
@@ -85,9 +83,9 @@ namespace EventSeatBookingSystem.Controllers
 
     public class SeatSelectionRequest
     {
-        public int EventId { get; set; }  
-        public string SeatType { get; set; } 
-        public int ProximityToStage { get; set; }  
+        public int EventId { get; set; }
+        public string SeatType { get; set; }
+        public int ProximityToStage { get; set; }
     }
 
     public class RankedSeat

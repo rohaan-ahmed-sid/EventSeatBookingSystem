@@ -1,1 +1,35 @@
-﻿
+﻿@{
+    ViewBag.Title = "AI Decor Suggestion";
+}
+
+<h2>AI Decor Suggestion</h2>
+<form id="decorForm">
+    <label>Event Name:</label>
+    <input type="text" id="eventName" required />
+    <br />
+    <label>Theme:</label>
+    <input type="text" id="theme" required />
+    <br />
+    <button type="submit">Get Decor Suggestion</button>
+</form>
+<div id="result" style="margin-top:20px;"></div>
+
+@section scripts {
+    <script>document.getElementById('decorForm').onsubmit = async function(e) {
+    e.preventDefault();
+    document.getElementById('result').innerHTML = "Generating...";
+    const eventName = document.getElementById('eventName').value;
+    const theme = document.getElementById('theme').value;
+    const response = await fetch('/api/AI/DecorSuggestionsImage', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ EventName: eventName, Theme: theme })
+    });
+    const data = await response.json();
+    if (data.imageUrl) {
+        document.getElementById('result').innerHTML = `<img src="${data.imageUrl}" style="max-width:100%;" />`;
+    } else {
+        document.getElementById('result').innerHTML = "Failed to generate image.";
+    }
+};</script>
+}

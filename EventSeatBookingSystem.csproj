@@ -373,6 +373,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="GeneratedImages\" />
     <Folder Include="Views\API\" />
     <Folder Include="Views\DecorSuggestionAPI\" />
     <Folder Include="Views\SeatSelectionAPI\" />

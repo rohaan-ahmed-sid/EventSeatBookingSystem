@@ -9,7 +9,6 @@ namespace EventSeatBookingSystem.Controllers
     {
         private EventSeatBookingSystemEntities db = new EventSeatBookingSystemEntities();
 
-        // GET: Booking/Book/{eventId}
         public ActionResult Book(int eventId)
         {
             var eventDetails = db.Events.FirstOrDefault(e => e.EventId == eventId);
@@ -31,7 +30,6 @@ namespace EventSeatBookingSystem.Controllers
             return View(viewModel);
         }
 
-        // POST: Booking/Book/{eventId}
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Book(int eventId, int seatId)
@@ -47,7 +45,7 @@ namespace EventSeatBookingSystem.Controllers
 
             var booking = new Booking
             {
-                UserId = User.Identity.GetUserId<int>(), // Get the logged-in user's ID using ASP.NET Identity
+                UserId = User.Identity.GetUserId<int>(), 
                 EventId = eventId,
                 SeatId = seatId,
                 Status = "Booked",
@@ -60,7 +58,6 @@ namespace EventSeatBookingSystem.Controllers
             return RedirectToAction("BookingSuccess", new { bookingId = booking.BookingId });
         }
 
-        // GET: Booking/BookingSuccess/{bookingId}
         public ActionResult BookingSuccess(int bookingId)
         {
             var booking = db.Bookings.FirstOrDefault(b => b.BookingId == bookingId);
@@ -73,7 +70,6 @@ namespace EventSeatBookingSystem.Controllers
         }
     }
 
-    // ViewModel for passing event details and available seats to the view
     public class BookingViewModel
     {
         public Event Event { get; set; }

@@ -11,7 +11,7 @@ namespace EventSeatBookingSystem.Controllers
     [RoutePrefix("api/SeatSelection")]
     public class SeatSelectionAPIController : ApiController
     {
-        private EventSeatBookingSystemEntities db = new EventSeatBookingSystemEntities();  
+        private EventSeatBookingSystemEntities db = new EventSeatBookingSystemEntities();
 
         [HttpPost]
         [Route("SelectSeats")]
@@ -25,33 +25,45 @@ namespace EventSeatBookingSystem.Controllers
             var eventDetails = db.Events.FirstOrDefault(e => e.EventId == request.EventId);
             if (eventDetails == null)
             {
-                return NotFound();  
+                return NotFound();
             }
 
             var availableSeats = db.Seats.Where(s => s.EventId == request.EventId && s.IsAvailable == 1).ToList();
 
-            var bestSeats = SelectSeatsBasedOnUserPreferences(availableSeats, request);
+            var rankedSeats = RankSeatsBasedOnPreferences(availableSeats, request);
 
-            return Ok(bestSeats); 
+            return Ok(rankedSeats.Take(5));  
         }
 
-        private List<Seat> SelectSeatsBasedOnUserPreferences(List<Seat> availableSeats, SeatSelectionRequest request)
+
+        private List<Seat> RankSeatsBasedOnPreferences(List<Seat> availableSeats, SeatSelectionRequest request)
         {
-            var recommendedSeats = availableSeats;
+            List<RankedSeat> rankedSeats = new List<RankedSeat>();
 
-            if (!string.IsNullOrEmpty(request.SeatType))
+            foreach (var seat in availableSeats)
             {
-                recommendedSeats = recommendedSeats.Where(s => s.SeatType == request.SeatType).ToList();
+                float score = 0;
+
+                if (!string.IsNullOrEmpty(request.SeatType) && seat.SeatType == request.SeatType)
+                {
+                    score += 10;  
+                }
+
+                if (request.ProximityToStage > 0)
+                {
+                    int distanceToStage = CalculateProximity(seat.SeatNumber); 
+                    if (distanceToStage <= request.ProximityToStage)
+                    {
+                        score += 5; 
+                    }
+                }
+
+            
+                rankedSeats.Add(new RankedSeat { Seat = seat, Score = score });
             }
 
-            if (request.ProximityToStage > 0)
-            {
-                recommendedSeats = recommendedSeats.Where(s => CalculateProximity(s.SeatNumber) <= request.ProximityToStage).ToList();
-            }
-
-            recommendedSeats = recommendedSeats.OrderBy(s => CalculateSeatScore(s, request)).Take(5).ToList();  
-
-            return recommendedSeats;
+            var sortedSeats = rankedSeats.OrderByDescending(r => r.Score).Select(r => r.Seat).ToList();
+            return sortedSeats;
         }
 
         private int CalculateProximity(string seatNumber)
@@ -77,4 +89,11 @@ namespace EventSeatBookingSystem.Controllers
         public string SeatType { get; set; } 
         public int ProximityToStage { get; set; }  
     }
+
+    public class RankedSeat
+    {
+        public Seat Seat { get; set; }
+        public float Score { get; set; }
+    }
+
 }

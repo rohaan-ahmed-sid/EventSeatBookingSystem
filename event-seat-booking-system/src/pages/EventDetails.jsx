@@ -59,16 +59,18 @@ const EventDetails = () => {
     const [showAI, setShowAI] = useState(false);
 
     // Fetch AI recommendations when user requests
-    const fetchAIRecommendations = () => {
-        api.get(`/events/${id}/ai-recommended-seats`)
-            .then(res => {
-                setRecommendedSeats(res.data);
-                setShowAI(true);
-            })
-            .catch(err => {
-                console.error('AI seat suggestion error', err);
-                alert('Failed to get AI seat suggestions.');
+    const selectBestSeats = async (eventId, seatPreferences) => {
+        try {
+            const response = await api.post('/SeatSelection/SelectSeats', {
+                eventId: eventId,
+                ...seatPreferences
             });
+
+            // Process response (best seats)
+            console.log(response.data);
+        } catch (error) {
+            console.error("Error selecting seats:", error);
+        }
     };
 
 

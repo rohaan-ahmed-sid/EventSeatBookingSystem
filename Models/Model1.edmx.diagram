@@ -4,15 +4,15 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="712949da615e4a769ef5e7030b61ee2f" Name="Diagram1">
-        <EntityTypeShape EntityType="EventSeatBookingSystemModel.AIRecommendation" Width="1.5" PointX="3" PointY="5.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="EventSeatBookingSystemModel.Analytic" Width="1.5" PointX="3" PointY="7.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EventSeatBookingSystemModel.Booking" Width="1.5" PointX="5.25" PointY="12.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="EventSeatBookingSystemModel.Event" Width="1.5" PointX="0.75" PointY="7.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="EventSeatBookingSystemModel.Notification" Width="1.5" PointX="3" PointY="10.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EventSeatBookingSystemModel.Payment" Width="1.5" PointX="7.5" PointY="12.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="EventSeatBookingSystemModel.Seat" Width="1.5" PointX="3" PointY="17.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EventSeatBookingSystemModel.User" Width="1.5" PointX="0.75" PointY="11.75" IsExpanded="true" />
+      <Diagram DiagramId="712949da615e4a769ef5e7030b61ee2f" Name="Diagram1" ZoomLevel="72">
+        <EntityTypeShape EntityType="EventSeatBookingSystemModel.AIRecommendation" Width="1.5" PointX="3.125" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventSeatBookingSystemModel.Analytic" Width="1.5" PointX="6.125" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventSeatBookingSystemModel.Booking" Width="1.5" PointX="9.625" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventSeatBookingSystemModel.Event" Width="1.5" PointX="0.5" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventSeatBookingSystemModel.Notification" Width="1.5" PointX="5.375" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventSeatBookingSystemModel.Payment" Width="1.5" PointX="13.125" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventSeatBookingSystemModel.Seat" Width="1.5" PointX="9.625" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventSeatBookingSystemModel.User" Width="1.5" PointX="2.625" PointY="7.625" IsExpanded="true" />
         <AssociationConnector Association="EventSeatBookingSystemModel.FK__AIRecomme__Event__4D94879B" ManuallyRouted="false" />
         <AssociationConnector Association="EventSeatBookingSystemModel.FK__Analytics__Event__5535A963" ManuallyRouted="false" />
         <AssociationConnector Association="EventSeatBookingSystemModel.FK__Bookings__EventI__45F365D3" ManuallyRouted="false" />

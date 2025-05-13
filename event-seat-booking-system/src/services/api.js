@@ -7,4 +7,19 @@ const api = axios.create({
     },
 });
 
+const getDecorSuggestions = async (eventName, theme) => {
+    try {
+        const response = await api.post('/AI/DecorSuggestions', {
+            eventName: eventName,
+            theme: theme
+        });
+
+        // Display decor suggestions
+        console.log(response.data);
+    } catch (error) {
+        console.error("Error getting decor suggestions:", error);
+    }
+};
+
+
 export default api;

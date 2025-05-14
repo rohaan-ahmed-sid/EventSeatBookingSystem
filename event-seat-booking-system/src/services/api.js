@@ -1,25 +1,23 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'https://localhost:5001/api', // Update to your backend API base URL
+    baseURL: '', // Leave blank to use the proxy in package.json
     headers: {
         'Content-Type': 'application/json',
     },
 });
 
-const getDecorSuggestions = async (eventName, theme) => {
+export const getDecorSuggestionImage = async (eventName, theme) => {
     try {
-        const response = await api.post('/AI/DecorSuggestions', {
-            eventName: eventName,
-            theme: theme
+        const response = await api.post('/api/AI/DecorSuggestionsImage', {
+            EventName: eventName,
+            Theme: theme
         });
-
-        // Display decor suggestions
-        console.log(response.data);
+        return response.data.imageUrl;
     } catch (error) {
-        console.error("Error getting decor suggestions:", error);
+        console.error("Error getting decor suggestion image:", error);
+        throw error;
     }
 };
-
 
 export default api;

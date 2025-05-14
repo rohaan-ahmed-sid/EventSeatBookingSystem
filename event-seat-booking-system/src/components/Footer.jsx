@@ -1,7 +1,11 @@
-const Footer = () => (
-    <footer className="bg-gray-100 text-center text-sm text-gray-500 py-4">
-        &copy; {new Date().getFullYear()} EventBook. All rights reserved.
-    </footer>
-);
+const Footer = () => {
+    return (
+        <footer className="bg-gray-800 text-white p-4 mt-8">
+            <div className="container mx-auto text-center">
+                <p>© {new Date().getFullYear()} Event Seat Booking System. All rights reserved.</p>
+            </div>
+        </footer>
+    );
+};
 
 export default Footer;

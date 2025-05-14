@@ -1,33 +1,63 @@
-import { useEffect, useState } from 'react';
-import api from '../services/api';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import api from '../services/api';
 
 const Home = () => {
     const [events, setEvents] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        api.get('/events')
-            .then(res => setEvents(res.data))
-            .catch(err => console.error('Failed to fetch events', err))
-            .finally(() => setLoading(false));
+        api.getEvents()
+            .then(data => {
+                setEvents(data);
+                setLoading(false);
+            })
+            .catch(err => {
+                console.error('Error fetching events:', err);
+                setError('Failed to load events');
+                setLoading(false);
+            });
     }, []);
 
-    if (loading) return <p className="text-center">Loading events...</p>;
+    if (loading) return <div className="text-center p-8">Loading events...</div>;
+    if (error) return <div className="text-center p-8 text-red-500">{error}</div>;
 
     return (
-        <div>
-            <h1 className="text-2xl font-bold mb-4">Available Events</h1>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                {events.map(event => (
-                    <div key={event.id} className="border p-4 rounded shadow hover:shadow-md transition">
-                        <h2 className="text-xl font-semibold">{event.title}</h2>
-                        <p className="text-gray-600">{event.date} – {event.location}</p>
-                        <Link to={`/event/${event.id}`} className="text-blue-500 hover:underline mt-2 inline-block">
-                            View Details
-                        </Link>
-                    </div>
-                ))}
+        <div className="container mx-auto p-4">
+            <h1 className="text-3xl font-bold mb-6">Upcoming Events</h1>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {events.length > 0 ? (
+                    events.map(event => (
+                        <div key={event.EventId} className="bg-white rounded-lg shadow-md overflow-hidden">
+                            {event.ImageUrl && (
+                                <img
+                                    src={event.ImageUrl}
+                                    alt={event.Name}
+                                    className="w-full h-48 object-cover"
+                                />
+                            )}
+                            <div className="p-4">
+                                <h2 className="text-xl font-semibold mb-2">{event.Name}</h2>
+                                <p className="text-gray-600 mb-2">{new Date(event.EventDate).toLocaleDateString()}</p>
+                                <p className="text-gray-600 mb-2">{event.Venue}</p>
+                                <p className="mb-4">{event.Description.substring(0, 100)}...</p>
+                                <div className="flex justify-between items-center">
+                                    <span className="font-bold">${event.TicketPrice}</span>
+                                    <Link
+                                        to={`/event/${event.EventId}`}
+                                        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                                    >
+                                        View Details
+                                    </Link>
+                                </div>
+                            </div>
+                        </div>
+                    ))
+                ) : (
+                    <p className="col-span-3 text-center text-gray-500">No events available at the moment.</p>
+                )}
             </div>
         </div>
     );

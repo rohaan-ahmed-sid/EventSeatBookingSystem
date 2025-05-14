@@ -1,17 +1,27 @@
-import { Outlet } from 'react-router-dom';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
+import MainLayout from './layouts/MainLayout';
+import Home from './pages/Home';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import AdminEvents from './pages/admin/Events';
+import AdminBookings from './pages/admin/Bookings';
 
-const MainLayout = () => {
+function App() {
     return (
-        <div className="flex flex-col min-h-screen">
-            <Navbar />
-            <main className="flex-grow p-4">
-                <Outlet />
-            </main>
-            <Footer />
-        </div>
-    );
-};
+        <BrowserRouter>
+            <Toaster position="top-right" />
+            <Routes>
+                <Route path="/" element={<MainLayout />}>
+                    <Route index element={<Home />} />
 
-export default MainLayout;
+                    {/* Admin Routes */}
+                    <Route path="admin" element={<AdminDashboard />} />
+                    <Route path="admin/events" element={<AdminEvents />} />
+                    <Route path="admin/bookings" element={<AdminBookings />} />
+                </Route>
+            </Routes>
+        </BrowserRouter>
+    );
+}
+
+export default App;

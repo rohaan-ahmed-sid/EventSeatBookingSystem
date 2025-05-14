@@ -1,23 +1,49 @@
-import axios from 'axios';
-
-const api = axios.create({
-    baseURL: '', // Leave blank to use the proxy in package.json
-    headers: {
-        'Content-Type': 'application/json',
-    },
-});
-
-export const getDecorSuggestionImage = async (eventName, theme) => {
-    try {
-        const response = await api.post('/api/AI/DecorSuggestionsImage', {
-            EventName: eventName,
-            Theme: theme
-        });
-        return response.data.imageUrl;
-    } catch (error) {
-        console.error("Error getting decor suggestion image:", error);
-        throw error;
+const handleResponse = async (response) => {
+    if (!response.ok) {
+        const error = await response.json().catch(() => ({
+            message: response.statusText,
+        }));
+        throw new Error(error.message || 'Something went wrong');
     }
+    return response.json();
+};
+
+const api = {
+    // Events
+    getEvents: () =>
+        fetch('/api/events')
+            .then(handleResponse),
+
+    getEvent: (id) =>
+        fetch(`/api/events/${id}`)
+            .then(handleResponse),
+
+    // Bookings
+    getBookings: (userId) =>
+        fetch(`/api/bookings${userId ? `?userId=${userId}` : ''}`)
+            .then(handleResponse),
+
+    createBooking: (bookingData) =>
+        fetch('/api/bookings', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(bookingData),
+        }).then(handleResponse),
+
+    // Admin
+    getAdminEvents: () =>
+        fetch('/api/admin/events')
+            .then(handleResponse),
+
+    getAdminBookings: () =>
+        fetch('/api/admin/bookings')
+            .then(handleResponse),
+
+    getAdminUsers: () =>
+        fetch('/api/admin/users')
+            .then(handleResponse),
 };
 
 export default api;

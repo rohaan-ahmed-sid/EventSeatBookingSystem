@@ -12,6 +12,17 @@ const api = {
     // Events
     getEvents: () =>
         fetch('/api/events')
+            .then(response => {
+                console.log('Events API response:', response);
+                return handleResponse(response);
+            })
+            .catch(error => {
+                console.error('Events API error:', error);
+                throw error;
+            }),
+
+    getEvents: () =>
+        fetch('/api/events')
             .then(handleResponse),
 
     getEvent: (id) =>

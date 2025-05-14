@@ -1,27 +1,19 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Toaster } from 'react-hot-toast';
-import MainLayout from './layouts/MainLayout';
-import Home from './pages/Home';
-import AdminDashboard from './pages/admin/AdminDashboard';
-import AdminEvents from './pages/admin/Events';
-import AdminBookings from './pages/admin/Bookings';
+import { Link } from 'react-router-dom';
 
-function App() {
+const Navbar = () => {
     return (
-        <BrowserRouter>
-            <Toaster position="top-right" />
-            <Routes>
-                <Route path="/" element={<MainLayout />}>
-                    <Route index element={<Home />} />
-
-                    {/* Admin Routes */}
-                    <Route path="admin" element={<AdminDashboard />} />
-                    <Route path="admin/events" element={<AdminEvents />} />
-                    <Route path="admin/bookings" element={<AdminBookings />} />
-                </Route>
-            </Routes>
-        </BrowserRouter>
+        <nav className="bg-gray-800 text-white p-4">
+            <div className="container mx-auto flex justify-between items-center">
+                <Link to="/" className="text-xl font-bold">Event Seat Booking System</Link>
+                <div className="space-x-4">
+                    <Link to="/" className="hover:text-gray-300">Home</Link>
+                    <Link to="/admin" className="hover:text-gray-300">Admin</Link>
+                    <Link to="/admin/events" className="hover:text-gray-300">Events</Link>
+                    <Link to="/admin/bookings" className="hover:text-gray-300">Bookings</Link>
+                </div>
+            </div>
+        </nav>
     );
-}
+};
 
-export default App;
+export default Navbar;

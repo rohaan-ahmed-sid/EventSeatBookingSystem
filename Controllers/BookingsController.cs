@@ -1,3 +1,4 @@
+
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -10,7 +11,7 @@ using EventSeatBookingSystem.Models;
 namespace EventSeatBookingSystem.Controllers
 {
     [RoutePrefix("api/bookings")]
-    public class BookingsAPIController : ApiController
+    public class BookingsController : ApiController
     {
         private EventSeatBookingSystemEntities db = new EventSeatBookingSystemEntities();
 

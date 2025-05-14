@@ -11,6 +11,8 @@ import AdminEvents from './pages/admin/Events';
 import AdminBookings from './pages/admin/Bookings';
 import { Toaster } from 'react-hot-toast';
 import { useEffect } from 'react';
+import DecorSuggestion from './pages/DecorSuggestion';
+    
 
 function App() {
     return (
@@ -26,6 +28,7 @@ function App() {
                         <Route path="/admin/users" element={<AdminUsers />} />
                         <Route path="/admin/events" element={<AdminEvents />} />
                         <Route path="/admin/bookings" element={<AdminBookings />} />
+                        <Route path="decor-suggestion" element={<DecorSuggestion />} />
                     </Route>
                 </Routes>
             </Router>

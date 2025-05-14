@@ -28,7 +28,7 @@ namespace EventSeatBookingSystem.Controllers
                 return NotFound();
             }
 
-            var availableSeats = db.Seats.Where(s => s.EventId == request.EventId && s.IsAvailable == 1).ToList();
+            var availableSeats = db.Seats.Where(s => s.EventId == request.EventId && s.IsAvailable.HasValue && s.IsAvailable.Value).ToList();
 
             var rankedSeats = RankSeatsBasedOnPreferences(availableSeats, request);
 

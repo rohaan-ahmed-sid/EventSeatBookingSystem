@@ -244,12 +244,12 @@
     <Compile Include="Controllers\AIController.cs" />
     <Compile Include="Controllers\AnalyticsController.cs" />
     <Compile Include="Controllers\BookingController.cs" />
-    <Compile Include="Controllers\DecorSuggestionAPIController.cs" />
+    <Compile Include="Controllers\DecorSuggestionController.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NotificationController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
-    <Compile Include="Controllers\SeatSelectionAPIController.cs" />
+    <Compile Include="Controllers\SeatSelectionController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

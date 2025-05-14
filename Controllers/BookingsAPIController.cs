@@ -7,7 +7,7 @@ using System.Net.Http;
 using System.Web.Http;
 using EventSeatBookingSystem.Models;
 
-namespace EventSeatBookingSystem.Controllers.API
+namespace EventSeatBookingSystem.Controllers
 {
     [RoutePrefix("api/bookings")]
     public class BookingsAPIController : ApiController

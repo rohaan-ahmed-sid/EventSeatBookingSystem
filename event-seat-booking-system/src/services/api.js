@@ -21,10 +21,6 @@ const api = {
                 throw error;
             }),
 
-    getEvents: () =>
-        fetch('/api/events')
-            .then(handleResponse),
-
     getEvent: (id) =>
         fetch(`/api/events/${id}`)
             .then(handleResponse),

@@ -8,14 +8,16 @@ const Home = () => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
+        console.log('Fetching events...');
         api.getEvents()
             .then(data => {
+                console.log('Events data received:', data);
                 setEvents(data);
                 setLoading(false);
             })
             .catch(err => {
                 console.error('Error fetching events:', err);
-                setError('Failed to load events');
+                setError('Failed to load events: ' + err.message);
                 setLoading(false);
             });
     }, []);

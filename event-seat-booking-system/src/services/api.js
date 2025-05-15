@@ -11,7 +11,7 @@ const handleResponse = async (response) => {
 const api = {
     // Events
     getEvents: () =>
-        fetch('/api/events')
+        fetch('https://localhost:44319/api/events')
             .then(response => {
                 console.log('Events API response:', response);
                 return handleResponse(response);

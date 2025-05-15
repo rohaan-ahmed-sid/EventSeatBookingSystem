@@ -9,7 +9,7 @@ using EventSeatBookingSystem.Models;
 
 namespace EventSeatBookingSystem.Controllers
 {
-    [RoutePrefix("api/events")]
+    [RoutePrefix("/api/events")]
     public class EventsController : ApiController
     {
         private EventSeatBookingSystemEntities db = new EventSeatBookingSystemEntities();

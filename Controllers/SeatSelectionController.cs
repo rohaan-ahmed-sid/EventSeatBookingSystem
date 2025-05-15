@@ -14,7 +14,7 @@ namespace EventSeatBookingSystem.Controllers
         private EventSeatBookingSystemEntities db = new EventSeatBookingSystemEntities();
 
         [System.Web.Http.HttpPost]
-        [System.Web.Http.Route("SelectSeats")]
+        [System.Web.Http.Route("selectseats")]
         public IHttpActionResult GetBestSeats([FromBody] SeatSelectionRequest request)
         {
             if (request == null || request.EventId <= 0)

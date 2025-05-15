@@ -6,7 +6,7 @@ using System.Web.Http;
 
 namespace EventSeatBookingSystem.Controllers
 {
-    [RoutePrefix("api/AI")]
+    [RoutePrefix("api/decorsuggestions")]
     public class DecorSuggestionController : ApiController
     {
         [HttpPost]
